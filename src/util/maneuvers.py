@@ -85,7 +85,7 @@ class AirDodge:
                 # air dodge
                 else:
                     target_local = dot(self.target - self.car.pos, self.car.theta)
-                    target_local[2] = 0;
+                    target_local[2] = 0
 
                     direction = normalize(target_local)
 
@@ -265,7 +265,7 @@ class AerialTurn:
 
         # reduce the corrections for when the solution is nearly converged
         for i in range(0, 3):
-            error = abs(geodesic_world[i]) + abs(self.car.omega[i]);
+            error = abs(geodesic_world[i]) + abs(self.car.omega[i])
             alpha[i] = self.q(error) * alpha[i]
 
         # set the desired next angular velocity
@@ -593,7 +593,7 @@ class Wavedash:
             self.direction = normalize(vec3(1, 0, 0))
         else:
             self.direction = dot(target - car.pos, car.theta)
-            self.direction[2] = 0;
+            self.direction[2] = 0
             self.direction = normalize(self.direction)
 
         self.controls = SimpleControllerState()
