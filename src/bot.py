@@ -22,6 +22,11 @@ class MyBot(BaseAgent):
 
         aim(self, packet, my_car, car_location, ball_location)
 
+        '''
+        TODO:
+        Allow car to dodge towards ball, but if it is too close, dont dodge
+        '''
+
         return self.controller_state
 
 def dodge(self, packet, car, car_location, ball_location):
@@ -96,8 +101,7 @@ def draw_debug(renderer, car, ball, action_display):
     x = round(car.physics.location.x,3)
     y = round(car.physics.location.y,3)
     z = round(car.physics.location.z,3)
-    ball_location = 'Car Location:\nx: ' + str(x) + '\ny: ' + str(y) + '\nz: ' + str(z)    
-
+    ball_location = 'Car Location:\nx: ' + str(x) + '\ny: ' + str(y) + '\nz: ' + str(z)
     renderer.draw_string_2d(15,900, 2,2, ball_location, renderer.white())
 
     renderer.end_rendering()
