@@ -18,21 +18,33 @@ class MyBot(BaseAgent):
         my_car = packet.game_cars[self.index]
         car_location = Vec3(my_car.physics.location)
 
-        car_to_ball = ball_location - car_location
+        #car_to_ball = ball_location - car_location
 
-        # Find the direction of our car using the Orientation class
-        car_orientation = Orientation(my_car.physics.rotation)
-        car_direction = car_orientation.forward
-
-        steer_correction_radians = find_correction(
-            car_direction, car_to_ball)
-
-        basic_drive(self, packet, my_car, steer_correction_radians)
+        aim(self, packet, my_car, car_location, ball_location)
 
         return self.controller_state
 
+def dodge(self, packet, car, car_location, ball_location):
+    self.DODGE_TIME = 0.2
+    self.next_dodge_time = 0
+    self.dodge_interval = 0
 
-def basic_drive(self, packet, car, steer_correction_radians):
+    if self.dodge_interval < time.time():
+        self.dodge_interval = time.time() + 3
+    
+
+
+
+def aim(self, packet, car, car_location, ball_location):
+
+    # Find the direction of our car using the Orientation class
+    car_orientation = Orientation(car.physics.rotation)
+    car_direction = car_orientation.forward
+
+    car_to_ball = ball_location - car_location
+
+    steer_correction_radians = find_correction(car_direction, car_to_ball)
+
     if steer_correction_radians > 0:
         # Positive radians in the unit circle is a turn to the left.
         turn = -1.0  # Negative value for a turn to the left.
@@ -72,4 +84,20 @@ def draw_debug(renderer, car, ball, action_display):
     renderer.draw_line_3d(car.physics.location, ball.physics.location, renderer.yellow())
     # print the action that the bot is taking
     renderer.draw_string_3d(car.physics.location, 2, 2, action_display, renderer.white())
+    
+    #ball location
+    x = round(ball.physics.location.x,3)
+    y = round(ball.physics.location.y,3)
+    z = round(ball.physics.location.z,3)
+    ball_location = 'Ball Location: \nx: ' + str(x) + '\ny: ' + str(y) + '\nz: ' + str(z)
+    renderer.draw_string_2d(15,700, 2,2, ball_location, renderer.white())
+    
+    #car location
+    x = round(car.physics.location.x,3)
+    y = round(car.physics.location.y,3)
+    z = round(car.physics.location.z,3)
+    ball_location = 'Car Location:\nx: ' + str(x) + '\ny: ' + str(y) + '\nz: ' + str(z)    
+
+    renderer.draw_string_2d(15,900, 2,2, ball_location, renderer.white())
+
     renderer.end_rendering()
