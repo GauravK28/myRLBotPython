@@ -313,7 +313,7 @@ def solve_quadratic(a, b, c, interval=None):
                 return None
 
 
-def look_at(direction, up=vec3(0, 0, 1)):
+def look_at(direction, up=Vec3(0, 0, 1)):
 
     f = normalize(direction)
     u = normalize(cross(f, cross(up, f)))
@@ -374,7 +374,7 @@ class Aerial:
         # see if the boost acceleration needed to reach the target is achievable
         self.B_avg = 2.0 * norm(self.H) / ((T - ta) * (T - ta))
 
-    def __init__(self, car, up=vec3(0, 0, 1)):
+    def __init__(self, car, up=Vec3(0, 0, 1)):
 
         self.car = car
         self.up = up
@@ -514,7 +514,7 @@ class Drive:
 
     __slots__ = ['car', 'target_pos', 'target_speed', 'controls', 'finished']
 
-    def __init__(self, car, target_pos=vec3(0, 0, 0), target_speed=0):
+    def __init__(self, car, target_pos=Vec3(0, 0, 0), target_speed=0):
 
         self.car = car
         self.target_pos = target_pos

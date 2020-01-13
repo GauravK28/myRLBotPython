@@ -36,8 +36,9 @@ class Orientation:
 # relative to your car!
 def relative_location(center: Vec3, ori: Orientation, target: Vec3) -> Vec3:
     """
-    Returns target as a relative location from center's point of view, using the given orientation. The components of
-    the returned vector describes:
+    Returns target as a relative location from center's point of view, 
+        using the given orientation. 
+    The components of the returned vector describes:
 
     * x: how far in front
     * y: how far right

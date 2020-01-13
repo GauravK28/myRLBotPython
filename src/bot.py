@@ -1,11 +1,11 @@
 import math
+import time
 
 from rlbot.agents.base_agent import BaseAgent, SimpleControllerState
 from rlbot.utils.structures.game_data_struct import GameTickPacket
 from util.orientation import Orientation
 from util.vec import Vec3
 
-    
 class MyBot(BaseAgent):
 
     def initialize_agent(self):
@@ -27,37 +27,24 @@ class MyBot(BaseAgent):
         steer_correction_radians = find_correction(
             car_direction, car_to_ball)
 
-        # ball path prediction
-        # ball_prediction = self.get_ball_prediction_struct()
-        # prediction_slice = 0
-        # if ball_prediction is not None:
-        #     for i in range(0, ball_prediction.num_slices):
-        #         prediction_slice = ball_prediction.slices[i]
-        #         location = prediction_slice.physics.location
-        #         if (prediction_slice.game_seconds == 3):
-        #             self.controller_state.throttle = 1.0
-        #             vec = Vec3(x=location.x,y=location.y,z=location.z)
-        #             x = Drive(car = my_car, target_pos=vec, target_speed=50)
-        #             x.step(dt=0)
-        #             break
-                #self.logger.info("At time {}, 
-                # the ball will be at ({}, {}, {})"
-                # .format(prediction_slice.game_seconds,location.x, location.y, location.z))
-
-        if steer_correction_radians > 0:
-            # Positive radians in the unit circle is a turn to the left.
-            turn = -1.0  # Negative value for a turn to the left.
-            action_display = "turn left"
-        else:
-            turn = 1.0
-            action_display = "turn right"
-
-        self.controller_state.throttle = 1.0
-        self.controller_state.steer = turn
-        
-        draw_debug(self.renderer, my_car, packet.game_ball, action_display)
+        basic_drive(self, packet, my_car, steer_correction_radians)
 
         return self.controller_state
+
+
+def basic_drive(self, packet, car, steer_correction_radians):
+    if steer_correction_radians > 0:
+        # Positive radians in the unit circle is a turn to the left.
+        turn = -1.0  # Negative value for a turn to the left.
+        action_display = "turn left"
+    else:
+        turn = 1.0
+        action_display = "turn right"
+
+    self.controller_state.throttle = 1.0
+    self.controller_state.steer = turn
+        
+    draw_debug(self.renderer, car, packet.game_ball, action_display)
 
 
 def find_correction(current: Vec3, ideal: Vec3) -> float:
